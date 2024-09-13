@@ -1,3 +1,11 @@
+Note: This is a WIP fork to evaluating the ability to set individual corners. Progress:
+
+- [x] iOS
+- [ ] Android
+- [ ] Fix Issue: Given a SquircleView has no child element, when not all corner properties set, and not a borderRadius is set, then the view will have a rounded corner set on all corners
+
+I may or may not continue this work depending on need. 
+
 # expo-squircle-view
 
 A native implementation for figma corner smoothing (Squircle Shape) for react native expo apps
