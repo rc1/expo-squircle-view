@@ -20,28 +20,38 @@ struct CurveProperties {
 
 struct SquirclePath {
     
-    static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool) -> CGPath {
+    static func create(width: CGFloat, height: CGFloat, topLeftRadius: CGFloat, topRightRadius: CGFloat, bottomRightRadius: CGFloat, bottomLeftRadius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool) -> CGPath {
         
-        let checkedRadius = min(radius, width  / 2, height / 2)
-        let checkedCornerSmoothing =  max(min(cornerSmoothing / 100, 1), 0)
-        
-        let curveProperties = calculateCurveProperties(cornerRadius: checkedRadius, cornerSmoothing: checkedCornerSmoothing, preserveSmoothing: preserveSmoothing, roundingAndSmoothingBudget: min(width , height) / 2)
-        let stringPath = getSVGPathFromPathParams(width: width, height: height, curveProperties: curveProperties)
+        let topLeftCurveProperties = createCurveProperties(width: width, height: height, radius: topLeftRadius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing)
+        let topRightCurveProperties = createCurveProperties(width: width, height: height, radius: topRightRadius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing)
+        let bottomRightCurveProperties = createCurveProperties(width: width, height: height, radius: bottomRightRadius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing)
+        let bottomLeftCurveProperties = createCurveProperties(width: width, height: height, radius: bottomLeftRadius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing)
+       
+        let stringPath = getSVGPathFromPathParams(width: width, height: height, topLeftCurveProperties: topLeftCurveProperties, topRightCurveProperties: topRightCurveProperties, bottomRightCurveProperties: bottomRightCurveProperties, bottomLeftCurveProperties: bottomLeftCurveProperties);
         let svgString = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 \(height) \(width)'><path d='\(stringPath)'/></svg>"
         let paths = SVGBezierPath.paths(fromSVGString: svgString)
         return paths[0].cgPath
     }
     
-    static func getSVGPathFromPathParams(width: CGFloat, height: CGFloat, curveProperties: CurveProperties) -> String {
+    static func createCurveProperties (width:CGFloat, height:CGFloat, radius:CGFloat, cornerSmoothing:CGFloat, preserveSmoothing: Bool) -> CurveProperties {
+        let checkedRadius = min(radius, width  / 2, height / 2)
+        let checkedCornerSmoothing =  max(min(cornerSmoothing / 100, 1), 0)
+        
+        let curveProperties = calculateCurveProperties(cornerRadius: checkedRadius, cornerSmoothing: checkedCornerSmoothing, preserveSmoothing: preserveSmoothing, roundingAndSmoothingBudget: min(width , height) / 2)
+        
+        return curveProperties;
+    }
+    
+    static func getSVGPathFromPathParams(width: CGFloat, height: CGFloat, topLeftCurveProperties: CurveProperties, topRightCurveProperties: CurveProperties, bottomRightCurveProperties: CurveProperties, bottomLeftCurveProperties: CurveProperties) -> String {
         let pathString = """
-            M \(width - curveProperties.p) 0
-            \(SquirclePath.getTopRightPath(curveProperties: curveProperties))
-            L \(width) \(height - curveProperties.p)
-            \(SquirclePath.getBottomRightPath(curveProperties: curveProperties))
-            L \(curveProperties.p) \(height)
-            \(SquirclePath.getBottomLeftPath(curveProperties: curveProperties))
-            L 0 \(curveProperties.p)
-            \(SquirclePath.getTopLeftPath(curveProperties: curveProperties))
+            M \(width - topRightCurveProperties.p) 0
+            \(SquirclePath.getTopRightPath(curveProperties: topRightCurveProperties))
+            L \(width) \(height - bottomRightCurveProperties.p)
+            \(SquirclePath.getBottomRightPath(curveProperties: bottomRightCurveProperties))
+            L \(bottomLeftCurveProperties.p) \(height)
+            \(SquirclePath.getBottomLeftPath(curveProperties: bottomLeftCurveProperties))
+            L 0 \(topLeftCurveProperties.p)
+            \(SquirclePath.getTopLeftPath(curveProperties: topLeftCurveProperties))
             Z
             """
         

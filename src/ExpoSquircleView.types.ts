@@ -9,6 +9,10 @@ import {
 type SquircleProps = {
   cornerSmoothing?: number;
   borderRadius?: AnimatableNumericValue;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
   borderWidth?: number;
   preserveSmoothing?: boolean;
   enabledIOSAnimation?: boolean;

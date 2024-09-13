@@ -17,6 +17,18 @@ public class ExpoSquircleViewModule: Module {
             Prop("borderRadius") { (view: ExpoSquircleView, prop: Float) in
                 view.setRadius(CGFloat(prop))
             }
+            Prop("borderTopLeftRadius") { (view: ExpoSquircleView, prop: Float) in
+                view.setTopLeftRadius(CGFloat(prop))
+            }
+            Prop("borderTopRightRadius") { (view: ExpoSquircleView, prop: Float) in
+                view.setTopRightRadius(CGFloat(prop))
+            }
+            Prop("borderBottomLeftRadius") { (view: ExpoSquircleView, prop: Float) in
+                view.setBottomLeftRadius(CGFloat(prop))
+            }
+            Prop("borderBottomRightRadius") { (view: ExpoSquircleView, prop: Float) in
+                view.setBottomRightRadius(CGFloat(prop))
+            }
             Prop("cornerSmoothing") { (view: ExpoSquircleView, prop: Int) in
                 view.setCornerSmoothing(CGFloat(prop))
             }

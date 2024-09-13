@@ -25,6 +25,10 @@ const ExpoSquircleViewNativeWrapper = (
     cornerSmoothing,
     backgroundColor,
     borderRadius,
+    borderTopLeftRadius,
+    borderTopRightRadius,
+    borderBottomRightRadius,
+    borderBottomLeftRadius,
     borderColor,
     borderWidth,
     preserveSmoothing,
@@ -40,6 +44,10 @@ const ExpoSquircleViewNativeWrapper = (
       cornerSmoothing={cornerSmoothing}
       preserveSmoothing={preserveSmoothing}
       enabledIOSAnimation={enabledIOSAnimation}
+      borderTopLeftRadius={borderTopLeftRadius}
+      borderTopRightRadius={borderTopRightRadius}
+      borderBottomRightRadius={borderBottomRightRadius}
+      borderBottomLeftRadius={borderBottomLeftRadius}
       style={StyleSheet.absoluteFill}
     />
   );
@@ -89,6 +97,10 @@ const useSquircleProps = (
   const {
     cornerSmoothing,
     borderRadius,
+    borderTopLeftRadius,
+    borderTopRightRadius,
+    borderBottomRightRadius,
+    borderBottomLeftRadius,
     borderWidth,
     backgroundColor,
     borderColor,
@@ -134,6 +146,10 @@ const useSquircleProps = (
     squircleProps: {
       ...props,
       borderRadius: borderRadius || style?.borderRadius || 0,
+      borderTopLeftRadius: borderTopLeftRadius || style?.borderTopLeftRadius || -1,
+      borderTopRightRadius: borderTopLeftRadius || style?.borderTopLeftRadius || -1,
+      borderBottomRightRadius: borderTopLeftRadius || style?.borderTopLeftRadius || -1,
+      borderBottomLeftRadius: borderTopLeftRadius || style?.borderTopLeftRadius || -1,
       borderWidth: borderWidth || style?.borderWidth || 0,
       backgroundColor:
         backgroundColor || style?.backgroundColor || "transparent",
